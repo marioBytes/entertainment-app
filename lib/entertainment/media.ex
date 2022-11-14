@@ -5,6 +5,8 @@ defmodule Entertainment.Media do
     Video
   }
 
+  alias Entertainment.Repo
+
   def get_video!(id), do: Repo.get!(Video, id)
 
   def create_video(attrs \\ %{}) do

@@ -8,6 +8,8 @@ defmodule Entertainment.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
+    has_many :bookmarked_videos, Entertainment.Accounts.BookmarkedUserVideo
+
     timestamps()
   end
 

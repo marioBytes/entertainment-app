@@ -13,6 +13,10 @@
 alias Entertainment.Accounts
 alias Entertainment.Media
 
+alias Ecto.Multi
+
+import Ecto.Query
+
 test_users = [
   %{
     email: "user@ent.io",
@@ -45,7 +49,7 @@ test_users = [
   %{
     email: "dan@ent.io",
     password: "12345678"
-  },
+  }
 ]
 
 test_videos = [
@@ -236,7 +240,6 @@ test_videos = [
     year: 2017,
     category: "Movie",
     rating: "E",
-
     is_trending: false
   },
   %{
@@ -479,5 +482,19 @@ test_videos = [
   }
 ]
 
-Enum.each(test_users, fn user -> Accounts.register_user(user) end)
 Enum.each(test_videos, fn video -> Media.create_video(video) end)
+
+Enum.each(test_users, fn user ->
+  Multi.new()
+  |> Multi.run(:account, fn _, _ -> Accounts.register_user(user) end)
+  |> Multi.run(:bookmark_videos, fn _, %{account: account} ->
+    videos = Media.list_videos()
+
+    Enum.each(videos, fn %{id: v_id} ->
+      Accounts.bookmark_video(%{user_id: account.id, video_id: v_id})
+    end)
+
+    {:ok, ""}
+  end)
+  |> Entertainment.Repo.transaction()
+end)

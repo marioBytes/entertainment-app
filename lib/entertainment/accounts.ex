@@ -6,7 +6,7 @@ defmodule Entertainment.Accounts do
   import Ecto.Query, warn: false
   alias Entertainment.Repo
 
-  alias Entertainment.Accounts.{User, UserToken, UserNotifier}
+  alias Entertainment.Accounts.{BookmarkedUserVideo, User, UserToken, UserNotifier}
 
   ## Database getters
 
@@ -235,7 +235,7 @@ defmodule Entertainment.Accounts do
   """
   def get_user_by_session_token(token) do
     {:ok, query} = UserToken.verify_session_token_query(token)
-    Repo.one(query)
+    query |> Repo.one() |> Repo.preload(bookmarked_videos: :video)
   end
 
   @doc """
@@ -353,5 +353,15 @@ defmodule Entertainment.Accounts do
       {:ok, %{user: user}} -> {:ok, user}
       {:error, :user, changeset, _} -> {:error, changeset}
     end
+  end
+
+  def bookmark_video(attrs \\ %{}) do
+    %BookmarkedUserVideo{}
+    |> BookmarkedUserVideo.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def remove_bookmarked_video(%BookmarkedUserVideo{} = buv) do
+    Repo.delete(buv)
   end
 end

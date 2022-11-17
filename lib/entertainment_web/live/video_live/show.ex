@@ -18,6 +18,7 @@ defmodule EntertainmentWeb.VideoLive.Show do
      |> assign(:video, Media.get_video!(id))}
   end
 
+  @impl true
   def handle_event(
         "add-video-bookmark",
         _,
@@ -32,6 +33,7 @@ defmodule EntertainmentWeb.VideoLive.Show do
     end
   end
 
+  @impl true
   def handle_event(
         "remove-video-bookmark",
         _,

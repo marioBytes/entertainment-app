@@ -1,0 +1,13 @@
+<tr>
+  <td><%= @video.title %></td>
+  <td><%= @video.year %></td>
+  <td><%= @video.is_trending %></td>
+
+  <td>
+    <%= if @video_is_bookmarked do %>
+      <button phx-click="remove-video-bookmark" phx-target={@myself}>Remove Bookmark</button>
+    <% else %>
+      <button phx-click="add-video-bookmark" phx-target={@myself}>Add Bookmark</button>
+    <% end %>
+  </td>
+</tr>

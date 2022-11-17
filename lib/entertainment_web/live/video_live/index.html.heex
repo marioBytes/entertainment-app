@@ -24,20 +24,8 @@
     </tr>
   </thead>
   <tbody id="videos">
-    <%= for video <- @videos do %>
-      <tr id={"video-#{video.id}"}>
-        <td><%= video.title %></td>
-        <td><%= video.year %></td>
-        <td><%= video.is_trending %></td>
-
-        <td>
-          <span><%= live_redirect "Show", to: Routes.video_show_path(@socket, :show, video) %></span>
-          <span><%= live_patch "Edit", to: Routes.video_index_path(@socket, :edit, video) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: video.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
+    <%= for {video, index} <- @videos |> Enum.with_index() do %>
+      <.live_component module={VideoComponent} id={"video-#{index}"} video={video} current_user={@current_user} />
     <% end %>
   </tbody>
 </table>
-
-<span><%= live_patch "New Video", to: Routes.video_index_path(@socket, :new) %></span>

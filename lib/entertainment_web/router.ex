@@ -79,12 +79,14 @@ defmodule EntertainmentWeb.Router do
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
 
-    live "/videos", VideoLive.Index, :index
-    live "/videos/new", VideoLive.Index, :new
-    live "/videos/:id/edit", VideoLive.Index, :edit
+    live_session :default, on_mount: EntertainmentWeb.UserAuthLive do
+      live "/videos", VideoLive.Index, :index
+      live "/videos/new", VideoLive.Index, :new
+      live "/videos/:id/edit", VideoLive.Index, :edit
 
-    live "/videos/:id/edit", VideoLive.Show, :edit
-    live "/videos/:id", VideoLive.Show, :show
+      live "/videos/:id/edit", VideoLive.Show, :edit
+      live "/videos/:id", VideoLive.Show, :show
+    end
   end
 
   scope "/", EntertainmentWeb do

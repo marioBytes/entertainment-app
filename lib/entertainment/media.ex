@@ -1,5 +1,6 @@
 defmodule Entertainment.Media do
   alias Entertainment.Media.Video
+  alias Entertainment.Accounts.BookmarkedUserVideo
 
   alias Entertainment.Repo
 
@@ -31,5 +32,10 @@ defmodule Entertainment.Media do
 
   def change_video(%Video{} = video, attrs \\ %{}) do
     Video.changeset(video, attrs)
+  end
+
+  def get_bookmarked_user_video(user_id, video_id) do
+    BookmarkedUserVideo
+    |> Repo.get_by(%{user_id: user_id, video_id: video_id})
   end
 end

@@ -13,7 +13,7 @@ defmodule Entertainment.Media.Video.Query do
   end
 
   def search_by_title(query_string) do
-    base() |> where([v], ilike(v.title, ^"%#{query_string}%"))
+    base() |> title_query(query_string)
   end
 
   def search_by_title_and_category(query_string, category) do
@@ -24,6 +24,10 @@ defmodule Entertainment.Media.Video.Query do
     BookmarkedUserVideo
     |> join(:inner, [buv], v in Video, on: buv.video_id == v.id and buv.user_id == ^user_id)
     |> select([_buv, v], v)
-    |> where([_buv, v], ilike(v.title, ^"%#{query_string}%"))
+    |> title_query(query_string)
+  end
+
+  defp title_query(query, title) do
+    query |> where([v], ilike(v.title, ^"%#{title}%"))
   end
 end

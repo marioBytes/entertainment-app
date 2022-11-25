@@ -34,17 +34,9 @@
         <small>&bull;</small>
         <div class="flex flex-row gap-2 items-center justify-center">
           <%= if @video.category == "Movie" do %>
-            <img
-              src={Routes.static_path(@socket, "/images/icon-category-movie.svg")}
-              alt="Movie Icon"
-              class="md:h-4 md:w-4 h-3 w-3"
-            />
+            <EntertainmentWeb.Components.SVGs.category_movie />
           <% else %>
-            <img
-              src={Routes.static_path(@socket, "/images/icon-category-tv.svg")}
-              alt="TV Series Icon"
-              class="md:h-4 md:w-4 h-3 w-3"
-            />
+            <EntertainmentWeb.Components.SVGs.category_tv_series />
           <% end %>
           <small><%= @video.category %></small>
         </div>

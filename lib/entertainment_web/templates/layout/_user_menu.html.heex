@@ -1,13 +1,65 @@
-<ul>
-<%= if @current_user do %>
-  <li><%= @current_user.email %></li>
-  <li><%= link "Home", to: "/" %></li>
-  <li><%= link "Videos", to: Routes.video_index_path(@conn, :index) %></li>
-  <li><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %></li>
-  <li><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
-<% else %>
-  <li><%= link "Home", to: "/" %></li>
-  <li><%= link "Register", to: Routes.user_registration_path(@conn, :new) %></li>
-  <li><%= link "Log in", to: Routes.user_session_path(@conn, :new) %></li>
-<% end %>
-</ul>
+<div class="flex items-center justify-between bg-secondary-color px-4 py-5 rounded-xl">
+  <div>
+    <EntertainmentWeb.Components.SVGs.logo />
+  </div>
+  <div class="flex items-center justify-center gap-x-4">
+    <%= link to: Routes.video_index_path(@socket, :index) do %>
+      <EntertainmentWeb.Components.SVGs.nav_home
+        active={
+          if @live_action == :index do
+            true
+          else
+            false
+          end
+        }
+      />
+    <% end %>
+    <%= link to: Routes.video_index_path(@socket, :movies) do %>
+      <EntertainmentWeb.Components.SVGs.nav_movies
+        active={
+          if @live_action == :movies do
+            true
+          else
+            false
+          end
+        }
+      />
+    <% end %>
+    <%= link to: Routes.video_index_path(@socket, :tv_series) do %>
+      <EntertainmentWeb.Components.SVGs.nav_tv_series
+        active={
+          if @live_action == :tv_series do
+            true
+          else
+            false
+          end
+        }
+      />
+    <% end %>
+    <%= link to: Routes.video_index_path(@socket, :bookmarked_videos) do %>
+      <EntertainmentWeb.Components.SVGs.nav_bookmark
+        active={
+          if @live_action == :bookmarked_videos do
+            true
+          else
+            false
+          end
+        }
+      />
+    <% end %>
+  </div>
+  <div class="flex items-center justify-center gap-x-2">
+    <%= if @current_user do %>
+      <%= link to: "/settings" do %>
+        <img src={Routes.static_path(@socket, "/images/image-avatar.png")} alt="User profile picture" class="w-8 h-8" />
+      <% end %>
+    <% else %>
+      <EntertainmentWeb.Components.Buttons.button_primary to="/login">
+        Login
+      </EntertainmentWeb.Components.Buttons.button_primary>
+      <EntertainmentWeb.Components.Buttons.button_secondary to="/signup">
+        Signup
+      </EntertainmentWeb.Components.Buttons.button_secondary>
+    <% end %>
+  </div>
+</div>

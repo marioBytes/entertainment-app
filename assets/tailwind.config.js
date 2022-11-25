@@ -16,6 +16,8 @@ module.exports = {
         'secondary-color': '#161d2f',
         'font-color-primary': '#ffffff',
         'font-color-secondary': '#c3c4c7',
+        'button-color': '#fc4747',
+        'button-color-hover': '#ffffff',
       },
       fontFamily: {
         sans: ['Outfit', 'sans-serif'],

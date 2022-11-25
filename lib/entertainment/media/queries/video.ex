@@ -12,6 +12,10 @@ defmodule Entertainment.Media.Video.Query do
     base() |> where([v], v.id == ^id)
   end
 
+  def videos_by_category(category) do
+    base() |> where([v], v.category == ^category)
+  end
+
   def search_by_title(query_string) do
     base() |> title_query(query_string)
   end

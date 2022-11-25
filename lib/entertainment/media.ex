@@ -9,6 +9,15 @@ defmodule Entertainment.Media do
     |> Repo.all()
   end
 
+  def list_videos_by_category(category) when category == "Movie" or category == "TV Series" do
+    Video.Query.videos_by_category(category)
+    |> Repo.all()
+  end
+
+  def list_videos_by_category(_) do
+    []
+  end
+
   def get_video!(id) do
     Video.Query.single_video(id)
     |> Repo.one()

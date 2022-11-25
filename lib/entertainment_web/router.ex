@@ -62,10 +62,10 @@ defmodule EntertainmentWeb.Router do
   scope "/", EntertainmentWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
-    get "/users/register", UserRegistrationController, :new
-    post "/users/register", UserRegistrationController, :create
-    get "/users/log_in", UserSessionController, :new
-    post "/users/log_in", UserSessionController, :create
+    get "/signup", UserRegistrationController, :new
+    post "/signup", UserRegistrationController, :create
+    get "/login", UserSessionController, :new
+    post "/login", UserSessionController, :create
     get "/users/reset_password", UserResetPasswordController, :new
     post "/users/reset_password", UserResetPasswordController, :create
     get "/users/reset_password/:token", UserResetPasswordController, :edit
@@ -75,12 +75,12 @@ defmodule EntertainmentWeb.Router do
   scope "/", EntertainmentWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    get "/users/settings", UserSettingsController, :edit
-    put "/users/settings", UserSettingsController, :update
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    get "/settings", UserSettingsController, :edit
+    put "/settings", UserSettingsController, :update
+    get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
 
     live_session :default, on_mount: EntertainmentWeb.UserAuthLive do
-      live "/videos", VideoLive.Index, :index
+      live "/videos", VideoLive.Index
       live "/videos/new", VideoLive.Index, :new
       live "/videos/:id/edit", VideoLive.Index, :edit
 

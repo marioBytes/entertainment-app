@@ -12,7 +12,7 @@ defmodule EntertainmentWeb.VideoLive.Index do
 
   @impl true
   def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+    {:noreply, socket}
   end
 
   defp apply_action(socket, :index, _params) do

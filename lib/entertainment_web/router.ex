@@ -80,7 +80,10 @@ defmodule EntertainmentWeb.Router do
     get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
 
     live_session :default, on_mount: EntertainmentWeb.UserAuthLive do
-      live "/videos", VideoLive.Index
+      live "/videos", VideoLive.Index, :index
+      live "/videos/movies", VideoLive.Index, :movies
+      live "/videos/tv-series", VideoLive.Index, :tv_series
+      live "/videos/bookmarked-videos", VideoLive.Index, :bookmarked_videos
       live "/videos/new", VideoLive.Index, :new
       live "/videos/:id/edit", VideoLive.Index, :edit
 

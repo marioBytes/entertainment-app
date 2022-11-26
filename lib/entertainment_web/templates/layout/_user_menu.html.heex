@@ -3,10 +3,10 @@
     <EntertainmentWeb.Components.SVGs.logo />
   </div>
   <div class="flex items-center justify-center gap-x-4">
-    <%= link to: Routes.video_index_path(@socket, :index) do %>
+    <%= link to: Routes.video_index_path(@conn, :index) do %>
       <EntertainmentWeb.Components.SVGs.nav_home
         active={
-          if @live_action == :index do
+          if "videos" in @conn.path_info and length(@conn.path_info) == 1 do
             true
           else
             false
@@ -14,10 +14,10 @@
         }
       />
     <% end %>
-    <%= link to: Routes.video_index_path(@socket, :movies) do %>
+    <%= link to: Routes.video_index_path(@conn, :movies) do %>
       <EntertainmentWeb.Components.SVGs.nav_movies
         active={
-          if @live_action == :movies do
+          if "movies" in @conn.path_info do
             true
           else
             false
@@ -25,10 +25,10 @@
         }
       />
     <% end %>
-    <%= link to: Routes.video_index_path(@socket, :tv_series) do %>
+    <%= link to: Routes.video_index_path(@conn, :tv_series) do %>
       <EntertainmentWeb.Components.SVGs.nav_tv_series
         active={
-          if @live_action == :tv_series do
+          if "tv-series" in @conn.path_info do
             true
           else
             false
@@ -37,10 +37,10 @@
       />
     <% end %>
     <%= if @current_user do %>
-      <%= link to: Routes.video_index_path(@socket, :bookmarked_videos) do %>
+      <%= link to: Routes.video_index_path(@conn, :bookmarked_videos) do %>
         <EntertainmentWeb.Components.SVGs.nav_bookmark
           active={
-            if @live_action == :bookmarked_videos do
+            if "bookmarked-videos" in @conn.path_info do
               true
             else
               false
@@ -53,7 +53,7 @@
   <div class="flex items-center justify-center gap-x-2">
     <%= if @current_user do %>
       <%= link to: "/settings" do %>
-        <img src={Routes.static_path(@socket, "/images/image-avatar.png")} alt="User profile picture" class="w-8 h-8" />
+        <img src={Routes.static_path(@conn, "/images/image-avatar.png")} alt="User profile picture" class="w-8 h-8" />
       <% end %>
     <% else %>
       <EntertainmentWeb.Components.Buttons.button_primary to="/login">

@@ -49,6 +49,10 @@ defmodule EntertainmentWeb.VideoLive.Index do
     assign(socket, :videos, tv_series)
   end
 
+  defp assign_bookmarked_videos(%{assigns: %{current_user: nil}} = socket) do
+    assign(socket, :videos, [])
+  end
+
   defp assign_bookmarked_videos(%{assigns: %{current_user: %{bookmarked_videos: bookmarked_videos}}} = socket) do
     assign(socket, :videos, get_videos(bookmarked_videos))
   end

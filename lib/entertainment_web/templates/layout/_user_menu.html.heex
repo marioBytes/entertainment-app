@@ -36,16 +36,18 @@
         }
       />
     <% end %>
-    <%= link to: Routes.video_index_path(@socket, :bookmarked_videos) do %>
-      <EntertainmentWeb.Components.SVGs.nav_bookmark
-        active={
-          if @live_action == :bookmarked_videos do
-            true
-          else
-            false
-          end
-        }
-      />
+    <%= if @current_user do %>
+      <%= link to: Routes.video_index_path(@socket, :bookmarked_videos) do %>
+        <EntertainmentWeb.Components.SVGs.nav_bookmark
+          active={
+            if @live_action == :bookmarked_videos do
+              true
+            else
+              false
+            end
+          }
+        />
+      <% end %>
     <% end %>
   </div>
   <div class="flex items-center justify-center gap-x-2">

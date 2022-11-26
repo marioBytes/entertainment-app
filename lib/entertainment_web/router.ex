@@ -20,7 +20,17 @@ defmodule EntertainmentWeb.Router do
   scope "/", EntertainmentWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live_session :default, on_mount: EntertainmentWeb.UserAuthLive do
+      live "/", PageLive.Index
+
+      live "/videos", VideoLive.Index, :index
+      live "/videos/movies", VideoLive.Index, :movies
+      live "/videos/tv-series", VideoLive.Index, :tv_series
+      live "/videos/new", VideoLive.Index, :new
+      live "/videos/:id/edit", VideoLive.Index, :edit
+
+      live "/videos/:id/edit", VideoLive.Show, :edit
+    end
   end
 
   # Other scopes may use custom stacks.
@@ -78,18 +88,7 @@ defmodule EntertainmentWeb.Router do
     get "/settings", UserSettingsController, :edit
     put "/settings", UserSettingsController, :update
     get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
-
-    live_session :default, on_mount: EntertainmentWeb.UserAuthLive do
-      live "/videos", VideoLive.Index, :index
-      live "/videos/movies", VideoLive.Index, :movies
-      live "/videos/tv-series", VideoLive.Index, :tv_series
-      live "/videos/bookmarked-videos", VideoLive.Index, :bookmarked_videos
-      live "/videos/new", VideoLive.Index, :new
-      live "/videos/:id/edit", VideoLive.Index, :edit
-
-      live "/videos/:id/edit", VideoLive.Show, :edit
-      live "/videos/:id", VideoLive.Show, :show
-    end
+    live "/videos/bookmarked-videos", VideoLive.Index, :bookmarked_videos
   end
 
   scope "/", EntertainmentWeb do

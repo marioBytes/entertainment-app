@@ -61,6 +61,10 @@ defmodule EntertainmentWeb.VideoLive.Video.VideoComponent do
     assign(socket, :video_is_bookmarked, value)
   end
 
+  defp video_is_bookmarked?(%{assigns: %{current_user: nil}}, _) do
+    false
+  end
+
   defp video_is_bookmarked?(%{assigns: %{current_user: %{bookmarked_videos: videos}}}, video_id) do
     video_ids = map_bookmarked_video_ids(videos)
 

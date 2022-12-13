@@ -1,9 +1,30 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 /* This file is for your main application CSS */
+.input {
+  background-color: transparent;
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid #5a698f;
+  border-left: none;
+}
 
+.input:active,
+.input:focus {
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid #ffffff;
+  border-left: none;
+}
+
+.input,
+.input:active,
+.input:focus {
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+}
 /* Alerts and form errors used by phx.new */
 .alert {
   padding: 15px;

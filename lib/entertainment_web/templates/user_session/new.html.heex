@@ -1,27 +1,31 @@
-<h1>Log in</h1>
+<EntertainmentWeb.Components.FormCard.card title="Login" to="/signup">
+  <.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
+    <%= if @error_message do %>
+      <div class="alert alert-danger">
+        <p><%= @error_message %></p>
+      </div>
+    <% end %>
 
-<.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
-  <%= if @error_message do %>
-    <div class="alert alert-danger">
-      <p><%= @error_message %></p>
+    <div class="flex flex-col gap-6">
+      <EntertainmentWeb.InputComponent.input_field
+        for="user_email"
+        id="user_email"
+        type="email"
+        name="user[email]"
+        placeholder="Email address"
+        required="true"
+      />
+
+      <EntertainmentWeb.InputComponent.input_field
+        for="user_password"
+        id="user_password"
+        type="password"
+        name="user[password]"
+        placeholder="Password"
+        required="true"
+      />
+
+      <%= submit "Log in", class: "w-full bg-button-color p-3 rounded-md" %>
     </div>
-  <% end %>
-
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
-
-  <%= label f, :password %>
-  <%= password_input f, :password, required: true %>
-
-  <%= label f, :remember_me, "Keep me logged in for 60 days" %>
-  <%= checkbox f, :remember_me %>
-
-  <div>
-    <%= submit "Log in" %>
-  </div>
-</.form>
-
-<p>
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
-</p>
+  </.form>
+</EntertainmentWeb.Components.FormCard.card>

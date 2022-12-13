@@ -32,16 +32,12 @@ defmodule EntertainmentWeb.UserAuth do
     |> renew_session()
     |> put_session(:user_token, token)
     |> put_session(:live_socket_id, "users_sessions:#{Base.url_encode64(token)}")
-    |> maybe_write_remember_me_cookie(token, params)
+    |> write_remember_me_cookie(token, params)
     |> redirect(to: user_return_to || signed_in_path(conn))
   end
 
-  defp maybe_write_remember_me_cookie(conn, token, %{"remember_me" => "true"}) do
+  defp write_remember_me_cookie(conn, token, _params) do
     put_resp_cookie(conn, @remember_me_cookie, token, @remember_me_options)
-  end
-
-  defp maybe_write_remember_me_cookie(conn, _token, _params) do
-    conn
   end
 
   # This function renews the session ID and erases the whole
